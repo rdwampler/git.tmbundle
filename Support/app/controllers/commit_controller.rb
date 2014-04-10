@@ -8,7 +8,7 @@ class CommitController < ApplicationController
       @message = git.merge_message
       render "merge_commit"
     else
-      run_partial_commit
+      render "_commit_result", :locals => params[:result] if params[:result]
     end
   end
 
@@ -28,6 +28,9 @@ class CommitController < ApplicationController
     git.add(paths)
     paths.each { |file| puts "Added '#{git.relative_path_for(file)}' to the index" }
     exit_show_tool_tip
+  end
+
+  def error
   end
 
   protected
