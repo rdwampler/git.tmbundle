@@ -13,7 +13,12 @@
 		ENV.delete('TM_DOCUMENT_UUID') # Fix for mate v2.5
 
 		git = Git.new
-		result = PartialCommitWorker.factory(nil, git).run
+
+		commit_worker = PartialCommitWorker.factory(nil, git)
+		exit 0 commit_worker.file_candidates.empty?
+
+		result = commit_worker.run
+		dispatch(:controller => "commit", :result => result) if result
 </string>
 	<key>input</key>
 	<string>none</string>
