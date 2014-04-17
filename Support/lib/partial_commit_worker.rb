@@ -20,7 +20,11 @@ module PartialCommitWorker
     end
   
     def ok_to_proceed_with_partial_commit?
-      (! git.branch.current_name.nil?) || git.initial_commit_pending?
+      if amend?
+        git.rebase_in_progress? || (! git.branch.current_name.nil?)
+      else
+        (! git.branch.current_name.nil?) || git.initial_commit_pending?
+      end
     end
     
     def target_paths

@@ -230,6 +230,10 @@ module SCM
       status.empty?
     end
 
+    def rebase_in_progress?
+      File.exist?(File.join(git_dir, "rebase-merge/amend"))
+    end
+
     def commit(msg, files = ["."], options = {})
       args = ["commit"]
       args << "--amend" if options[:amend]
