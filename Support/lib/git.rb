@@ -209,7 +209,7 @@ module SCM
     end
     
     def status(file_or_dir = nil, options = {})
-      results = parse_status(command("status", "--porcelain"))
+      results = parse_status(command("status", "--porcelain", "--ignore-submodules=dirty"))
       return results if file_or_dir.nil?
       results.select do |status|
         Array(file_or_dir).find { |e| status[:path] =~ /^#{Regexp.escape(e)}(\/|$)/ }
